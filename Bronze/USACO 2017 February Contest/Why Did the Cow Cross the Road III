@@ -1,0 +1,50 @@
+/*
+USACO 2017 February Contest, Bronze
+Problem 3. Why Did the Cow Cross the Road III
+*/
+
+import java.io.*;
+import java.util.*;
+
+class cowqueue {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("cowqueue.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("cowqueue.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int num = Integer.parseInt(st.nextToken());
+      cow[] arr = new cow[num];
+      for(int x = 0; x < num; x++)
+      {
+         StringTokenizer st2 = new StringTokenizer(br.readLine());
+         arr[x] = new cow(Integer.parseInt(st2.nextToken()), Integer.parseInt(st2.nextToken()));
+      }
+      Arrays.sort(arr);
+      int curr = arr[0].start + arr[0].end;
+      for(int y = 1; y < arr.length; y++)
+      {
+         if(arr[y].start >= curr)
+            curr = arr[y].start + arr[y].end;
+         else
+            curr += arr[y].end;
+      }
+      out.println(curr);
+      out.close();
+   }
+   static class cow implements Comparable<cow>
+   {
+      int start;
+      int end;
+      public cow(int start, int end)
+      {
+         this.start = start;
+         this.end = end;
+      }
+      public int compareTo(cow c)
+      {
+         if(start > c.start)
+            return 1;
+         return -1;
+      }
+   } 
+}
