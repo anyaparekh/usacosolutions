@@ -1,0 +1,67 @@
+/*
+USACO 2019 January Contest, Bronze
+Problem 1. Shell Game
+*/
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class shell {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("shell.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("shell.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int n = Integer.parseInt(st.nextToken());
+      int[] swap1 = new int[n];  
+      int[] swap2 = new int[n];
+      int[] guess = new int[n];
+      for(int x = 0; x < n; x++)
+      {
+         st = new StringTokenizer(br.readLine());
+         swap1[x] = Integer.parseInt(st.nextToken());
+         swap2[x] = Integer.parseInt(st.nextToken());
+         guess[x] = Integer.parseInt(st.nextToken());
+      }
+      int[] temp = {1, 0, 0};
+      int max = 0;
+      int count = 0;
+      for(int a = 0; a < n; a++)
+      {
+         int i = temp[swap1[a]-1];
+         temp[swap1[a]-1] = temp[swap2[a]-1];
+         temp[swap2[a]-1] = i;
+         if(temp[guess[a]-1] == 1)
+            count++;
+      }
+      if(count > max)
+         max = count;
+      temp = new int[]{0, 1, 0};
+      count = 0;
+      for(int b = 0; b < n; b++)
+      {
+         int i = temp[swap1[b]-1];
+         temp[swap1[b]-1] = temp[swap2[b]-1];
+         temp[swap2[b]-1] = i;
+         if(temp[guess[b]-1] == 1)
+            count++;
+      }
+      if(count > max)
+         max = count;
+      temp = new int[]{0, 0, 1};
+      count = 0;
+      for(int c = 0; c < n; c++)
+      {
+         int i = temp[swap1[c]-1];
+         temp[swap1[c]-1] = temp[swap2[c]-1];
+         temp[swap2[c]-1] = i;
+         if(temp[guess[c]-1] == 1)
+            count++;
+      }
+      if(count > max)
+         max = count;
+      out.println(max);
+      out.close();     
+   }
+}
