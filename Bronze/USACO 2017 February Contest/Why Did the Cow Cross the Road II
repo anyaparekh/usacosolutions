@@ -1,0 +1,45 @@
+/*
+USACO 2017 February Contest, Bronze
+Problem 2. Why Did the Cow Cross the Road II
+*/
+
+import java.io.*;
+import java.util.*;
+
+class circlecross2 {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("circlecross.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("circlecross.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      String str = st.nextToken();
+      List<String> array = new ArrayList<>(Arrays.asList(str.split("")));
+      int[][] arr = new int[26][2];
+      String s = "";
+      int count = 0;
+      int x = 0;
+      while(s.length() != 26)
+      {
+         if(!s.contains(array.get(x)))
+         {
+            String val = array.get(x);
+            s += array.get(x);
+            arr[count][0] = x;
+            arr[count][1] = array.lastIndexOf(val);
+            count++;
+         }
+         x++;
+      }
+      int count2 = 0;
+      for(int i = 0; i < arr.length; i++)
+      {
+         for(int j = i+1; j < arr.length; j++)
+         {
+            if(arr[j][0] < arr[i][1] && arr[i][1] < arr[j][1])
+               count2++;
+         }
+      }
+      out.println(count2);
+      out.close();
+   }
+}
