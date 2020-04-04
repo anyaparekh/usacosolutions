@@ -1,0 +1,55 @@
+/*
+USACO 2017 US Open Contest, Bronze
+Problem 2. Bovine Genomics
+*/
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class cownomics {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("cownomics.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("cownomics.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int num = Integer.parseInt(st.nextToken());
+      int length = Integer.parseInt(st.nextToken());
+      String[] reg = new String[length];
+      String[] spotty = new String[length];
+      Arrays.fill(reg, "");
+      Arrays.fill(spotty, "");
+      for(int a = 0; a < num; a++)
+      { 
+         st = new StringTokenizer(br.readLine());
+         char[] temp = st.nextToken().toCharArray();
+         for(int b = 0; b < length; b++)
+         {
+            spotty[b] = spotty[b] + ("" + temp[b]);
+         }
+      }
+      for(int c = 0; c < num; c++)
+      { 
+         st = new StringTokenizer(br.readLine());
+         char[] temp = st.nextToken().toCharArray();
+         for(int d = 0; d < length; d++)
+         {
+            reg[d] = reg[d] + ("" + temp[d]);
+         }
+      }
+      int count = 0;
+      for(int x = 0; x < length; x++)
+      {
+         boolean bool = true;
+         for(int y = 0; y < num; y++)
+         {
+            if(reg[x].contains("" + spotty[x].charAt(y)))
+               bool = false;
+            if(bool && y == num-1)
+               count++;
+         }
+      }
+      out.println(count);
+      out.close();
+   }
+}
