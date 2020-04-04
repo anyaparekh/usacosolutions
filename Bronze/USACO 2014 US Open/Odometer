@@ -1,0 +1,53 @@
+/*
+USACO 2014 US Open, Bronze
+Problem 1. Odometer
+*/
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class odometer2 {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("odometer.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("odometer.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      long start = Long.parseLong(st.nextToken());
+      long end = Long.parseLong(st.nextToken());
+      int count = 0;
+      List<Long> l = new ArrayList<Long>();
+      for(int x = 3; x <= 17; x++)
+      {
+         for(int y = 0; y < 10; y++)
+         {
+            String s = "";
+            for(int z = 0; z < x; z++)
+            {
+               s += ("" + y);
+            }
+            for(int a = 0; a < 10; a++)
+            {
+               if(a != y)
+               {
+                  String temps = "";
+                  for(int b = 0; b < x; b++)
+                  {
+                     if(!(b == 0 && a == 0))
+                     {
+                        temps = s.substring(0, b) + ("" + a) + s.substring(b+1);
+                        if(Long.parseLong(temps) >= start && Long.parseLong(temps) <= end && !l.contains(Long.parseLong(temps)))
+                        {
+                           l.add(Long.parseLong(temps));
+                           count++;
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+      out.println(count);
+      out.close();
+   }
+}
