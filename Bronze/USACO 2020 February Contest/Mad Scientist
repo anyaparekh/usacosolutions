@@ -1,0 +1,38 @@
+/*
+USACO 2020 February Contest, Bronze
+Problem 2. Mad Scientist
+*/
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class breedflip {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("breedflip.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("breedflip.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int n = Integer.parseInt(st.nextToken());
+      int[] narray = new int[n];
+      st = new StringTokenizer(br.readLine());
+      char[] oldarr = st.nextToken().toCharArray();
+      st = new StringTokenizer(br.readLine());
+      char[] newarr = st.nextToken().toCharArray();
+      for(int x = 0; x < n; x++)
+      {
+         if(oldarr[x] != newarr[x])
+            narray[x] = 1;
+      }
+      int count = 0;
+      for(int y = 0; y < n; y++)
+      {
+         if(y != n - 1 && narray[y] == 1 && narray[y+1] == 0)
+            count++;
+         if(y == n - 1 && narray[y] == 1)
+            count++;
+      }
+      out.println(count);
+      out.close();
+   }
+}
