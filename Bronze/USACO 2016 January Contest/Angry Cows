@@ -1,0 +1,93 @@
+/*
+USACO 2016 January Contest, Bronze
+Problem 2. Angry Cows
+*/
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class angry {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("angry.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("angry.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int n = Integer.parseInt(st.nextToken());
+      int[] arr = new int[n];
+      int[] distance = new int[n-1];
+      int max = 0;
+      for(int x = 0; x < n; x++)
+      {
+         st = new StringTokenizer(br.readLine());
+         arr[x] = Integer.parseInt(st.nextToken());
+      }
+      Arrays.sort(arr);
+      for(int y = 1; y < n; y++)
+      {
+         distance[y-1] = arr[y]-arr[y-1];
+      }
+      for(int i = 0; i < n; i++)
+      {
+         int count = 0;
+         int radius = 1;
+         boolean bool = true;
+         int l = i;
+         while(bool)
+         {
+            if(l != 0)
+            {
+               int d = 0;
+               if(distance[l-1] <= radius)
+               {
+                  d = distance[l-1];
+                  l -= 1;
+                  count++;
+                  while(l != 0 && (d + distance[l-1] <= radius))
+                  {
+                     count++;
+                     d += distance[l-1];
+                     l -= 1;
+                  }
+                  radius++;
+               }
+               else
+                  bool = false;
+            }
+            else
+               bool = false;
+         }
+         radius = 1;
+         bool = true;
+         l = i;
+         while(bool)
+         {
+            if(l != n-1)
+            {
+               int d = 0;
+               if(distance[l] <= radius)
+               {
+                  d = distance[l];
+                  l += 1;
+                  count++;
+                  while(l != n-1 && (d + distance[l] <= radius))
+                  {
+                     count++;
+                     d += distance[l];
+                     l += 1;
+                  }
+                  radius++;
+               }
+               else
+                  bool = false;
+            }
+            else
+               bool = false;
+         }
+         if(count+1 > max)
+            max = count+1;
+      }
+      out.println(max);
+      out.close();
+   }
+}
