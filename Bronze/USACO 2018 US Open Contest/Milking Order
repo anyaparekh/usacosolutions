@@ -1,0 +1,121 @@
+/*
+USACO 2018 US Open Contest, Bronze
+Problem 2. Milking Order
+*/
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class milkorder {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("milkorder.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("milkorder.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int n = Integer.parseInt(st.nextToken());
+      int m = Integer.parseInt(st.nextToken());
+      int k = Integer.parseInt(st.nextToken());   
+      int[] arr = new int[n]; 
+      int[] arrm = new int[m];
+      boolean check = true;
+      boolean isone = false;
+      st = new StringTokenizer(br.readLine());
+      for(int x = 0; x < m; x++)
+      {
+         arrm[x] = Integer.parseInt(st.nextToken());
+         if(arrm[x] == 1)
+            isone = true;
+      }
+      int[] arrkval = new int[k];
+      int[] arrkind = new int[k];
+      int ret = 0;
+      for(int y = 0; y < k; y++)
+      {
+         st = new StringTokenizer(br.readLine());
+         arrkval[y] = Integer.parseInt(st.nextToken());
+         arrkind[y] = Integer.parseInt(st.nextToken());
+         if(arrkval[y] == 1)
+         {
+            check = false;
+            ret = arrkind[y];
+         }
+      }
+      for(int a = 0; a < k; a++)
+         arr[arrkind[a] - 1] = arrkval[a];
+      int curr = n-1;
+      for(int b = m-1; !isone && check && b >= 0; b--)
+      {
+         int val = arrm[b];
+         boolean bool = false;
+         for(int d = 0; d < n; d++)
+         {
+            if(arr[d] == val)
+            {
+               bool = true;
+               break;
+            }
+         }
+         if(bool)
+         {
+            while(arr[curr] != val)
+               curr--;
+         }
+         else
+         {
+            while(arr[curr] != 0)
+            {
+               curr--;
+            }
+            arr[curr] = val;
+         }
+         curr--;
+      }
+      for(int z = 0; !isone && check && z < n; z++)
+      {
+         if(arr[z] == 0)
+         {
+            ret = z + 1;
+            break;
+         }
+      }
+      curr = 0;
+      if(isone && check)
+      {
+         for(int b = 0; check && b < m; b++)
+         {
+            int val = arrm[b];
+            boolean bool = false;
+            for(int d = 0; d < n; d++)
+            {
+               if(arr[d] == val)
+               {
+                  bool = true;
+                  break;
+               }
+            }
+            if(bool)
+            {
+               while(arr[curr] != val)
+                  curr++;
+            }
+            else
+            {
+               while(arr[curr] != 0)
+               {
+                  curr++;
+               }
+               arr[curr] = val;
+            }
+            if(arr[curr] == 1)
+            {
+               ret = curr+1;
+               break;
+            }
+            curr++;
+         }
+      }
+      out.println(ret);
+      out.close();
+   }
+}
