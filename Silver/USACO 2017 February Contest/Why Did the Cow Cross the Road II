@@ -1,0 +1,49 @@
+/*
+USACO 2017 February Contest, Silver
+Problem 2. Why Did the Cow Cross the Road II
+*/
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+ 
+class maxcross
+{
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("maxcross.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("maxcross.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int n = Integer.parseInt(st.nextToken());
+      int k = Integer.parseInt(st.nextToken());
+      int b = Integer.parseInt(st.nextToken());
+      int[] arr = new int[n];
+      Arrays.fill(arr, 1);
+      for(int x = 0; x < b; x++)
+      {
+         st = new StringTokenizer(br.readLine());
+         int val = Integer.parseInt(st.nextToken());
+         arr[val - 1] = 0;
+      }
+      int max = 0;
+      for(int y = 0; y < k; y++)
+      {
+         if(arr[y] == 1)
+            max++;
+      } 
+      int count = max;
+      for(int z = 0; z < n-k; z++)
+      {
+         int rem = arr[z];
+         int add = arr[z+k];
+         if(rem == 1)
+            count--;
+         if(add == 1)
+            count++;
+         if(count > max)
+            max = count;
+      }
+      out.println(k-max);
+      out.close();       
+   }
+}
