@@ -1,0 +1,47 @@
+/*
+USACO 2017 US Open Contest, Bronze
+Problem 1. The Lost Cow
+*/
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class lostcow {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("lostcow.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("lostcow.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int x = Integer.parseInt(st.nextToken());
+      int y = Integer.parseInt(st.nextToken());
+      boolean bool = true;
+      int sign = 0;
+      int count = 0;
+      int diff = 1;
+      int currval = x;
+      int nextval = x + 1;
+      while(bool)
+      {
+         count += Math.abs(nextval - currval);
+         if((currval <= y && y <= nextval))
+         {
+            bool = false;
+            out.println(count - (nextval-y));
+         }
+         else if((currval >= y && y >= nextval))
+         {
+            bool = false;
+            out.println(count - (y-nextval));
+         }
+         sign++;
+         diff *= 2;
+         currval = nextval;
+         if(sign % 2 == 1)
+            nextval = x - diff;
+         else
+            nextval = x + diff;
+      }
+      out.close();
+   }
+}
