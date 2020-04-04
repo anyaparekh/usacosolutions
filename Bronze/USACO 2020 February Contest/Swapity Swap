@@ -1,0 +1,71 @@
+/*
+USACO 2020 February Contest, Bronze
+Problem 3. Swapity Swap
+*/
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class swap {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("swap.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("swap.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int n = Integer.parseInt(st.nextToken());
+      List<int[]> l = new ArrayList<int[]>();
+      int[] narray = new int[n];
+      int[] temp = new int[n];
+      int k = Integer.parseInt(st.nextToken());
+      for(int x = 0; x < n; x++)
+      {
+         temp[x] = x+1;
+         narray[x] = x+1;
+      }
+      st = new StringTokenizer(br.readLine());
+      int a1 = Integer.parseInt(st.nextToken());
+      int a2 = Integer.parseInt(st.nextToken());
+      st = new StringTokenizer(br.readLine());
+      int b1 = Integer.parseInt(st.nextToken());
+      int b2 = Integer.parseInt(st.nextToken());
+      boolean bool = true;
+      int count = 0;
+      int x = 0;
+      l.add(temp);
+      while(!Arrays.equals(narray, l.get(x)) || bool)
+      {
+         int[] temp2 = new int[n];
+         for(int e = 0; e < l.get(x).length; e++)
+            temp2[e] = l.get(x)[e];
+         bool = false;
+         ArrayList<Integer> al = new ArrayList<Integer>();
+         for(int a = a1 - 1; a < a2; a++)
+            al.add(temp2[a]);
+         Collections.reverse(al);
+         int i = 0;
+         for(int b = a1 - 1; b < a2; b++)
+         {
+            temp2[b] = al.get(i);
+            i++;
+         }
+         ArrayList<Integer> al2 = new ArrayList<Integer>();
+         for(int c = b1 - 1; c < b2; c++)
+            al2.add(temp2[c]);
+         Collections.reverse(al2);
+         i = 0;
+         for(int d = b1 - 1; d < b2; d++)
+         {
+            temp2[d] = al2.get(i);
+            i++;
+         }
+         l.add(temp2);
+         count++;
+         x++;
+      } 
+      int[] arr = l.get(k%count);
+      for(int val = 0; val < arr.length; val++)
+         out.println(arr[val]);
+      out.close();     
+   }
+}
