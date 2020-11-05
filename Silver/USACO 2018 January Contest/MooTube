@@ -1,0 +1,78 @@
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class mootube3 {
+   public static Node[] videos;
+   public static int n;
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("mootube.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("mootube.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      n = Integer.parseInt(st.nextToken());
+      int q = Integer.parseInt(st.nextToken());
+      videos = new Node[n];
+      for(int y = 0; y < n; y++)
+         videos[y] = new Node(y);
+      for(int x = 0; x < n-1; x++)
+      {
+         st = new StringTokenizer(br.readLine());
+         int a = Integer.parseInt(st.nextToken())-1;
+         int b = Integer.parseInt(st.nextToken())-1;
+         int c = Integer.parseInt(st.nextToken());
+         videos[a].neighbors.add(new Edge(b, c));
+         videos[b].neighbors.add(new Edge(a, c));
+      }
+      for(int z = 0; z < q; z++)
+      {
+         st = new StringTokenizer(br.readLine());
+         int k = Integer.parseInt(st.nextToken());
+         int v = Integer.parseInt(st.nextToken())-1;
+         out.println(bfs(k, v));
+      }
+      out.close();
+   }
+   public static int bfs(int minweight, int node)
+   {
+      int count = 0;
+      boolean[] visited = new boolean[n];
+      Queue<Integer> q = new LinkedList<Integer>();
+      q.add(node);
+      while(!q.isEmpty())
+      {
+         int currnode = q.remove();
+         visited[currnode] = true;
+         for(Edge e: videos[currnode].neighbors)
+         {
+            if(!visited[e.node] && e.weight >= minweight)
+            {
+               count++;
+               visited[e.node] = true;
+               q.add(e.node);
+            }
+         }
+      }
+      return count;
+   }
+   public static class Node
+   {
+      public int node;
+      public ArrayList<Edge> neighbors;
+      public Node(int i)
+      {
+         node = i;
+         neighbors = new ArrayList<Edge>();
+      }
+   }
+   public static class Edge
+   {
+      public int node;
+      public int weight;
+      public Edge(int i, int w)
+      {
+         node = i;
+         weight = w;
+      }
+   }
+}
