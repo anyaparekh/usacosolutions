@@ -1,0 +1,54 @@
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class pairup {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("pairup.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("pairup.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int n = Integer.parseInt(st.nextToken());
+      pair[] arr = new pair[n];
+      int curr = 0;
+      for(int x = 0; x < n; x++)
+      {
+         st = new StringTokenizer(br.readLine());
+         int i = Integer.parseInt(st.nextToken());
+         int in = Integer.parseInt(st.nextToken());
+         arr[x] = new pair(i, in);
+      }
+      Arrays.sort(arr);
+      int toRet = 0;
+      int a = 0;
+      int b = n-1;
+      while(a <= b)
+      {
+         int match = Math.min(arr[a].i, arr[b].i);
+         if(a == b)
+            match = match/2;
+         toRet = Math.max(toRet, arr[a].in + arr[b].in);
+         arr[a].i -= match;
+         arr[b].i -= match;
+         if(arr[a].i == 0)
+            a++;
+         if(arr[b].i == 0)
+            b--;
+      }
+      out.println(toRet);
+      out.close();
+   }
+   static class pair implements Comparable<pair>
+   {
+      int i, in;
+      public pair(int i, int in)
+      {
+         this.i = i;
+         this.in = in;
+      }
+      public int compareTo(pair p)
+      {
+         return in - p.in; 
+      }
+   }
+}
