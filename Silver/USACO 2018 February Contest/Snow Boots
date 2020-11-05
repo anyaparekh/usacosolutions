@@ -1,0 +1,55 @@
+/*
+USACO 2018 February Contest, Silver
+Problem 2. Snow Boots
+*/
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class snowboots2 {
+   public static void main(String[] args) throws IOException
+   {
+      BufferedReader br = new BufferedReader(new FileReader("snowboots.in"));
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("snowboots.out")));
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int n = Integer.parseInt(st.nextToken());
+      int bo = Integer.parseInt(st.nextToken());
+      String[] arr = br.readLine().split(" ");
+      int[] s = new int[bo];
+      int[] d = new int[bo];
+      for(int x = 0; x < bo; x++)
+      {
+         st = new StringTokenizer(br.readLine());
+         s[x] = Integer.parseInt(st.nextToken());
+         d[x] = Integer.parseInt(st.nextToken());
+      }
+      boolean[][] bool = new boolean[n][bo];
+      for(int a = 0; a < bo; a++)
+      {
+         for(int b = 0; b < n; b++)
+         {
+            if(Integer.parseInt(arr[b]) > s[a])
+               continue;
+            if(a == 0 && b == 0)
+               bool[b][a] = true;
+            for(int c = 0; c < b; c++)
+            {
+               if(bool[c][a] && (c + d[a]) >= b)
+                  bool[b][a] = true;
+            }
+            for(int dn = 0; dn < a; dn++)
+            {
+               if(bool[b][dn])
+                  bool[b][a] = true;
+            }
+            if(b == n-1 && bool[b][a])
+            {
+               out.println(a);
+               out.close();
+               return;
+            }
+         }
+      }
+   }
+}
